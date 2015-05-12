@@ -22,6 +22,7 @@ public class StepDefinitions {
         driver =new FirefoxDriver();
        driver.get("http://kroger.com");
         driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
+
     }
 
     @When("^I click on sign in link$")
@@ -36,18 +37,22 @@ public class StepDefinitions {
     }
 
     @When("^I enter valid user name, password and click on sign in button$")
-    public void i_enter_valid_user_name_password_and_click_on_sign_in_button()  {
+    public void i_enter_valid_user_name_password_and_click_on_sign_in_button() throws InterruptedException {
         driver.findElement(By.xpath("//*[@id='signin-drawer-email-address']")).sendKeys("qtppnt@gmail.com");
         driver.findElement(By.xpath("//*[@id='signin-drawer-password']")).sendKeys("shibli1");
         driver.findElement(By.xpath("//*[@id='signin-drawer-submit']")).click();
+        Thread.sleep(5000);
     }
 
     @Then("^I successfully enter into my account$")
     public void i_successfully_enter_into_my_account(){
-        Assert.assertTrue(driver.findElement(By.xpath("//*[@id='signInContainer']/div/a[2]")).isDisplayed());
+        Assert.assertTrue(driver.findElement(By.xpath("//*[@id='account']")).isDisplayed());
 
     }
 
-
+    @After()
+    public void tearDown(){
+        driver.quit();
+    }
 
 }
